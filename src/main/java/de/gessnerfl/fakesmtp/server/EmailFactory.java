@@ -19,7 +19,7 @@ import java.util.regex.Pattern;
 @Service
 public class EmailFactory {
     private final static Pattern SUBJECT_PATTERN = Pattern.compile("^Subject: (.*)$");
-    private final static Pattern MESSAGEID_PATTERN = Pattern.compile("^Message-Id: (.*)$");
+    private final static Pattern MESSAGEID_PATTERN = Pattern.compile("^Message-ID: (.*)$");
     public static final String NO_SUBJECT = "<no subject>";
     public static final String NO_MESSAGEID = "<no message-id>";
 
