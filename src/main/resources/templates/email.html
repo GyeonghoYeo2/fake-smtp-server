@@ -21,6 +21,8 @@
                 <dd th:text="${mail.toAddress}">To</dd>
                 <dt>Received On:</dt>
                 <dd th:with="df='yyyy-MM-dd HH:mm:ss'" th:text="${#calendars.format(mail.receivedOn,df)}">Received On</dd>
+                <dt>Message-Id :</dt>
+                <dd th:text="${mail.messageId}">To</dd>
                 <dt>Subject</dt>
                 <dd th:text="${mail.subject}">Subject</dd>
             </dl>
