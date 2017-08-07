@@ -77,6 +77,7 @@ public class EmailRepositoryIntegrationTest {
         LocalDateTime localDateTime = LocalDateTime.now().minusMinutes(minusMinutes);
         Date receivedOn = Date.from(localDateTime.atZone(ZoneOffset.systemDefault()).toInstant());
         Email mail = new Email();
+        mail.setMessageId("Test MessageId "+randomToken);
         mail.setSubject("Test Subject "+randomToken);
         mail.setContent("Test Content "+randomToken);
         mail.setReceivedOn(receivedOn);

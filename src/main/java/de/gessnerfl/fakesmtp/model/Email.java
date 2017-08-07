@@ -10,7 +10,7 @@ public class Email {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
 
-    @Column(name="messageId", nullable = false)
+    @Column(name="message_id", nullable = false)
     @Basic(optional = false)
     private String messageId;
 
@@ -82,7 +82,7 @@ public class Email {
     }
 
     public void setMessageId(String messageId) {
-        this.content = messageId;
+        this.messageId = messageId;
     }
 
     public String getContent() {
