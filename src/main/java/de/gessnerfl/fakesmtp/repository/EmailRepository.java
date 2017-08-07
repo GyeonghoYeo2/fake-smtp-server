@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Repository
 public interface EmailRepository extends JpaRepository<Email,Long>{
 
@@ -16,6 +18,10 @@ public interface EmailRepository extends JpaRepository<Email,Long>{
     int deleteEmailsExceedingDateRetentionLimit(int maxNumber);
 
     @Transactional
-    @Query(value = "SELECT * FROM email o WHERE o.message_id= ?1", nativeQuery = true)
+    @Query(value = "SELECT o.* FROM email o WHERE o.message_id= ?1", nativeQuery = true)
     Email findByMessageId(String messageId);
+
+    @Transactional
+    @Query(value = "SELECT o.* FROM email o", nativeQuery = true)
+    List<Email> findEmails();
 }
