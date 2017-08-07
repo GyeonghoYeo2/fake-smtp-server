@@ -34,8 +34,9 @@ dependencies {
 	compile('commons-io:commons-io:2.5')
 	compile('org.subethamail:subethasmtp:3.1.7')
 	compile('org.flywaydb:flyway-core')
+	compile('com.fasterxml.jackson.core:jackson-databind:2.8.9')
 
-    compile('org.webjars.bower:jquery:3.2.1')
+	compile('org.webjars.bower:jquery:3.2.1')
     compile('org.webjars.bower:bootstrap:3.3.7')
 	compile('org.webjars:font-awesome:4.7.0')
 

@@ -28,7 +28,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
-public class EmailControllerMVCIntegrationTest {
+public class EmailWebControllerMVCIntegrationTest {
 
     @Autowired
     private EmailRepository emailRepository;

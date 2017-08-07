@@ -10,6 +10,10 @@ public class Email {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
 
+    @Column(name="messageId", nullable = false)
+    @Basic(optional = false)
+    private String messageId;
+
     @Column(name="from_address", length = 255, nullable = false)
     @Basic(optional = false)
     private String fromAddress;
@@ -71,6 +75,14 @@ public class Email {
 
     public void setReceivedOn(Date receivedOn) {
         this.receivedOn = receivedOn;
+    }
+
+    public String getMessageId() {
+        return messageId;
+    }
+
+    public void setMessageId(String messageId) {
+        this.content = messageId;
     }
 
     public String getContent() {

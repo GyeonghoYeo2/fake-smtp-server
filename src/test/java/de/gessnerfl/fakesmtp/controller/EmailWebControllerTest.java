@@ -19,13 +19,13 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class EmailControllerTest {
+public class EmailWebControllerTest {
     @Mock
     private Model model;
     @Mock
     private EmailRepository emailRepository;
     @InjectMocks
-    private EmailController sut;
+    private EmailWebController sut;
 
     @Test
     public void shouldReturnEmailsPaged() {
@@ -34,11 +34,11 @@ public class EmailControllerTest {
 
         String result = sut.getAll(0, 5, model);
 
-        assertEquals(EmailController.EMAIL_LIST_VIEW, result);
+        assertEquals(EmailWebController.EMAIL_LIST_VIEW, result);
 
         verify(emailRepository).findAll(argThat(matchPageable(0, 5)));
         verifyNoMoreInteractions(emailRepository);
-        verify(model).addAttribute(EmailController.EMAIL_LIST_MODEL_NAME, page);
+        verify(model).addAttribute(EmailWebController.EMAIL_LIST_MODEL_NAME, page);
     }
 
     @Test
@@ -52,7 +52,7 @@ public class EmailControllerTest {
 
         String result = sut.getAll(3, 5, model);
 
-        assertEquals(EmailController.REDIRECT_EMAIL_LIST_VIEW, result);
+        assertEquals(EmailWebController.REDIRECT_EMAIL_LIST_VIEW, result);
 
         verify(emailRepository).findAll(argThat(matchPageable(3, 5)));
         verifyNoMoreInteractions(emailRepository);
@@ -69,7 +69,7 @@ public class EmailControllerTest {
 
         String result = sut.getAll(0, 5, model);
 
-        assertEquals(EmailController.EMAIL_LIST_VIEW, result);
+        assertEquals(EmailWebController.EMAIL_LIST_VIEW, result);
 
         verify(emailRepository).findAll(argThat(matchPageable(0, 5)));
         verifyNoMoreInteractions(emailRepository);
@@ -79,7 +79,7 @@ public class EmailControllerTest {
     public void shouldRedirectToFirstPageWhenPageNumberIsBelowNull() {
         String result = sut.getAll(-1, 5, model);
 
-        assertEquals(EmailController.REDIRECT_EMAIL_LIST_VIEW, result);
+        assertEquals(EmailWebController.REDIRECT_EMAIL_LIST_VIEW, result);
         verifyZeroInteractions(emailRepository);
     }
 
@@ -87,7 +87,7 @@ public class EmailControllerTest {
     public void shouldRedirectToFirstPageWhenPageSizeIsNull() {
         String result = sut.getAll(0, 0, model);
 
-        assertEquals(EmailController.REDIRECT_EMAIL_LIST_VIEW, result);
+        assertEquals(EmailWebController.REDIRECT_EMAIL_LIST_VIEW, result);
         verifyZeroInteractions(emailRepository);
     }
 
@@ -95,7 +95,7 @@ public class EmailControllerTest {
     public void shouldRedirectToFirstPageWhenPageSizeIsBelowNull() {
         String result = sut.getAll(0, -1, model);
 
-        assertEquals(EmailController.REDIRECT_EMAIL_LIST_VIEW, result);
+        assertEquals(EmailWebController.REDIRECT_EMAIL_LIST_VIEW, result);
         verifyZeroInteractions(emailRepository);
     }
 
@@ -107,10 +107,10 @@ public class EmailControllerTest {
 
         String result = sut.getEmailById(id, model);
 
-        assertEquals(EmailController.SINGLE_EMAIL_VIEW, result);
+        assertEquals(EmailWebController.SINGLE_EMAIL_VIEW, result);
 
         verify(emailRepository).findOne(id);
-        verify(model).addAttribute(EmailController.SINGLE_EMAIL_MODEL_NAME, mail);
+        verify(model).addAttribute(EmailWebController.SINGLE_EMAIL_MODEL_NAME, mail);
     }
 
     @Test
@@ -122,7 +122,7 @@ public class EmailControllerTest {
 
         String result = sut.getEmailById(id, model);
 
-        assertEquals(EmailController.REDIRECT_EMAIL_LIST_VIEW, result);
+        assertEquals(EmailWebController.REDIRECT_EMAIL_LIST_VIEW, result);
 
         verify(emailRepository).findOne(id);
     }

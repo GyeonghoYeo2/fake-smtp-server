@@ -19,7 +19,9 @@ import java.util.regex.Pattern;
 @Service
 public class EmailFactory {
     private final static Pattern SUBJECT_PATTERN = Pattern.compile("^Subject: (.*)$");
+    private final static Pattern MESSAGEID_PATTERN = Pattern.compile("^Message-Id: (.*)$");
     public static final String NO_SUBJECT = "<no subject>";
+    public static final String NO_MESSAGEID = "<no message-id>";
 
     private final TimestampProvider timestampProvider;
     private final Logger logger;
@@ -33,15 +35,17 @@ public class EmailFactory {
     public Email convert(String from, String to, InputStream data) throws IOException {
         String content = convertStreamToString(data);
         String subject = parseSubject(content).orElse(NO_SUBJECT);
-        return createEmail(from, to, subject, content);
+        String messageId = parseMessageId(content).orElse(NO_MESSAGEID);
+        return createEmail(from, to, subject, messageId, content);
     }
 
-    private Email createEmail(String from, String to, String subject, String content){
+    private Email createEmail(String from, String to, String subject, String messageId, String content){
         Email email = new Email();
         email.setFromAddress(from);
         email.setToAddress(to);
         email.setReceivedOn(timestampProvider.now());
         email.setSubject(subject);
+        email.setMessageId(messageId);
         email.setContent(content);
         return email;
     }
@@ -62,6 +66,22 @@ public class EmailFactory {
             }
         } catch (IOException e) {
             logger.error("Failed to parse subject from email", e);
+        }
+        return Optional.empty();
+    }
+
+    private Optional<String> parseMessageId(String data) {
+        try {
+            BufferedReader reader = new BufferedReader(new StringReader(data));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                Matcher matcher = MESSAGEID_PATTERN.matcher(line);
+                if (matcher.matches()) {
+                    return Optional.of(matcher.group(1));
+                }
+            }
+        } catch (IOException e) {
+            logger.error("Failed to parse messageId from email", e);
         }
         return Optional.empty();
     }

@@ -1,5 +1,7 @@
 package de.gessnerfl.fakesmtp.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import de.gessnerfl.fakesmtp.model.Email;
 import de.gessnerfl.fakesmtp.repository.EmailRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +16,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @Controller
 @Transactional(propagation = Propagation.REQUIRES_NEW, readOnly = true)
-public class EmailController {
+public class EmailWebController {
     private static final Sort DEFAULT_SORT = new Sort(Sort.Direction.DESC, "receivedOn");
     private static final int DEFAULT_PAGE_SIZE = 10;
     static final String EMAIL_LIST_VIEW = "email-list";
@@ -28,7 +33,7 @@ public class EmailController {
     private final EmailRepository emailRepository;
 
     @Autowired
-    public EmailController(EmailRepository emailRepository) {
+    public EmailWebController(EmailRepository emailRepository) {
         this.emailRepository = emailRepository;
     }
 
@@ -58,5 +63,4 @@ public class EmailController {
         }
         return REDIRECT_EMAIL_LIST_VIEW;
     }
-
 }
