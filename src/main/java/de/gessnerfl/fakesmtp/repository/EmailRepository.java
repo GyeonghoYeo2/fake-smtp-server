@@ -22,6 +22,6 @@ public interface EmailRepository extends JpaRepository<Email,Long>{
     Email findByMessageId(String messageId);
 
     @Transactional
-    @Query(value = "SELECT o.* FROM email o", nativeQuery = true)
-    List<Email> findEmails();
+    @Query(value = "SELECT o.* FROM email o WHERE o.from_address= IFNULL(?1, o.from_address) AND o.to_address= IFNULL(?2, o.to_address)", nativeQuery = true)
+    List<Email> findEmails(String fromAddress, String toAddress);
 }

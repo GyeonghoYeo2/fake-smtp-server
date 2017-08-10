@@ -64,8 +64,14 @@ public class EmailRestController {
 
     @RequestMapping(path = "/rest/emails", method = org.springframework.web.bind.annotation.RequestMethod.GET, produces = "application/json")
     @ResponseBody
-    public List<Map<String, String>> getEmails(HttpServletResponse response) throws JsonProcessingException {
-        List<Email> emails = emailRepository.findEmails();
+    public List<Map<String, String>> getEmails(HttpServletRequest request, HttpServletResponse response) throws JsonProcessingException {
+        String fromAddress = request.getParameter("fromAddress");
+        String toAddress = request.getParameter("toAddress");
+
+        logger.info("requested fromAddress::" + fromAddress);
+        logger.info("requested toAddress::" + toAddress);
+
+        List<Email> emails = emailRepository.findEmails(fromAddress, toAddress);
         return emails.stream().map(email -> parseIntoMap(email)).collect(Collectors.toList());
     }
 
